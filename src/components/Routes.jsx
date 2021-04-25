@@ -1,7 +1,7 @@
 import React from 'react';
 import Route from '../components/Route';
 
-const Routes = ({data}) => {
+const Routes = ({data, getAirlineById, getAirportByCode}) => {
   return (
     <table>
       <thead>
@@ -18,9 +18,13 @@ const Routes = ({data}) => {
         </tr>
       </thead>
       <tbody>
-        {(data.routes).map(route => {
+        {(data.routes.slice(0,10)).map((route, index) => {
+          let {airline, src, dest } = route;
+          airline = getAirlineById(airline).name;
+          src = getAirportByCode(src).name;
+          dest = getAirportByCode(dest).name;
           return (
-            <Route route={route} />
+            <Route route={{airline, src, dest}} key={index} />
           )
         })}
       </tbody>

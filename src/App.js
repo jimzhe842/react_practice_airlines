@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Routes from './components/Routes';
-import Route from './components/Route';
+import { getAirlineById, getAirportByCode } from './data';
 let data = require('./data').default;
 console.log(data);
 
@@ -14,7 +14,7 @@ const App = () => (
     <p>
       Welcome to the app!
     </p>
-    <Routes data={data} />
+    <Routes data={data} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode}/>
   </section>
 </div>
 )
