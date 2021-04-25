@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
+import Routes from './components/Routes';
+import Route from './components/Route';
+let data = require('./data').default;
+console.log(data);
 
 const App = () => (
   <div className="app">
@@ -10,6 +14,7 @@ const App = () => (
     <p>
       Welcome to the app!
     </p>
+    <Routes data={data} />
   </section>
 </div>
 )
