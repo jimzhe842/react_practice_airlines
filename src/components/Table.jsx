@@ -18,7 +18,7 @@ const Routes = ({data, format, rowNumber, perPage}) => {
         </tr>
       </thead>
       <tbody>
-        {(data.routes.slice(rowNumber,Math.min(data.routes.length, rowNumber + perPage - 1))).map(format)}
+        {(data.slice(rowNumber,Math.min(data.length, rowNumber + perPage - 1))).map(format)}
       </tbody>
     </table>
   )
