@@ -1,7 +1,7 @@
 import React from 'react';
 import Route from './Route';
 
-const Routes = ({data, format}) => {
+const Routes = ({data, format, rowNumber, perPage}) => {
   return (
     <table>
       <thead>
@@ -18,7 +18,7 @@ const Routes = ({data, format}) => {
         </tr>
       </thead>
       <tbody>
-        {(data.routes.slice(0,10)).map(format)}
+        {(data.routes.slice(rowNumber,Math.min(data.routes.length, rowNumber + perPage - 1))).map(format)}
       </tbody>
     </table>
   )
