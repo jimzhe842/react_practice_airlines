@@ -2,6 +2,7 @@ import React, { Component, useState } from 'react';
 import './App.css';
 import Table from './components/Table';
 import Route from './components/Route';
+import Select from './components/Select';
 import { getAirlineById, getAirportByCode } from './data';
 let data = require('./data').default;
 // console.log(data);
@@ -32,7 +33,7 @@ const App = () => {
     setAirlineId(Number(e.target.options[selectedIndex].getAttribute('data-key')));
   }
 
-  let filteredData = data.routes.filter(route => airlineId === -1 || (route.airline === airlineId));
+  let filteredAirlines = data.routes.filter(route => airlineId === -1 || (route.airline === airlineId));
 
   return (
     <div className="app">
@@ -44,23 +45,18 @@ const App = () => {
           Welcome to the app!
         </p>
         Show routes on
-        <select onChange={e => onSelect(e)}>
-          <option key={-1} data-key={-1}>All Airlines</option>
-          {data.airlines.map(airline => {
-            return (
-            <option key={airline.id} data-key={airline.id}>{airline.name}</option>
-            )
-          })}
-        </select>
+        
+        <Select options={data.airlines} valueKey="id" titleKey="name"
+          allTitle="All Airlines" value="" onSelect={onSelect} />
         {/* <Table className="routes-table" columns={columns} rows="" format="" /> */}
-        <Table className="routes-table" columns={columns} rowNumber={rowNumber} rows="" perPage={rowsPerPage} format={formatValue} data={filteredData} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode}/>
+        <Table className="routes-table" columns={columns} rowNumber={rowNumber} rows="" perPage={rowsPerPage} format={formatValue} data={filteredAirlines} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode}/>
       </section>
       <p>
-        Showing {rowNumber+1}-{Math.min(filteredData.length, rowNumber+25)} of {filteredData.length}.
+        Showing {rowNumber+1}-{Math.min(filteredAirlines.length, rowNumber+25)} of {filteredAirlines.length}.
       </p>
       <button onClick={() => setRowNumber(rowNumber - rowsPerPage)} disabled = { rowNumber === 0 ? true : false }>Previous Page</button>
       <span>  </span>
-      <button onClick={() => setRowNumber(rowNumber + rowsPerPage)} disabled = { rowNumber + rowsPerPage >= filteredData.length ? true : false}>Next Page</button>
+      <button onClick={() => setRowNumber(rowNumber + rowsPerPage)} disabled = { rowNumber + rowsPerPage >= filteredAirlines.length ? true : false}>Next Page</button>
     </div>
   )
 }
