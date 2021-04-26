@@ -38,12 +38,20 @@ const App = () => {
     const selectedIndex = e.target.options.selectedIndex;
     setAirportCode(e.target.options[selectedIndex].getAttribute('data-key'));
   }
-  let filteredAirlines = data.routes.slice()
+  function clearFilter(e) {
+    setAirlineId(-1);
+    setAirportCode("000");
+  }
+  let filteredAirlines = data.routes.slice();
+  let selectedAirline = "All Airlines";
+  let selectedAirport = "All Airports";
   if (airlineId !== -1) {
     filteredAirlines = filteredAirlines.filter(route => route.airline === airlineId);
+    selectedAirline = getAirlineById(airlineId).name;
   }
   if (airportCode !== "000") {
     filteredAirlines = filteredAirlines.filter(route => route.src === airportCode || route.dest === airportCode);
+    selectedAirport = getAirportByCode(airportCode).name;
   }
 
   return (
@@ -57,9 +65,10 @@ const App = () => {
         </p>
         Show routes on
         <Select options={data.airlines} valueKey="id" titleKey="name"
-          allTitle="All Airlines" value="" onSelect={onSelect} />
+          allTitle="All Airlines" value="" onSelect={onSelect} selectedAirline={selectedAirline}/>
         flying in or out of
-        <AirportSelect options={data.airports} onAirportSelect={onAirportSelect} />
+        <AirportSelect options={data.airports} onAirportSelect={onAirportSelect} selectedAirport={selectedAirport}/>
+        <button onClick={clearFilter}>Show All Routes</button>
         {/* <Table className="routes-table" columns={columns} rows="" format="" /> */}
         <Table className="routes-table" columns={columns} rowNumber={rowNumber} rows="" perPage={rowsPerPage} format={formatValue} data={filteredAirlines} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode}/>
       </section>

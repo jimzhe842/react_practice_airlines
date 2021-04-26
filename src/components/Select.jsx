@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Select = ({options, onSelect}) => {
+const Select = ({options, onSelect, selectedAirline}) => {
   return (
-    <select onChange={e => onSelect(e)}>
+    <select onChange={e => onSelect(e)} value={selectedAirline}>
       <option key={-1} data-key={-1}>All Airlines</option>
       {options.map(airline => {
         return (
