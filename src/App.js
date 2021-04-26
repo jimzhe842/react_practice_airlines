@@ -1,9 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
-import Routes from './components/Routes';
+import Table from './components/Table';
+import Route from './components/Route';
 import { getAirlineById, getAirportByCode } from './data';
 let data = require('./data').default;
-console.log(data);
+// console.log(data);
+
+const columns = [
+  {name: 'Airline', property: 'airline'},
+  {name: 'Source Airport', property: 'src'},
+  {name: 'Destination Airport', property: 'dest'},
+];
+
+function formatValue(property, value) {
+  let {airline, src, dest } = property;
+    airline = getAirlineById(airline).name;
+    src = getAirportByCode(src).name;
+    dest = getAirportByCode(dest).name;
+    return (
+      <Route route={{airline, src, dest}} key={value} />
+    )
+}
 
 const App = () => (
   <div className="app">
@@ -14,7 +31,8 @@ const App = () => (
     <p>
       Welcome to the app!
     </p>
-    <Routes data={data} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode}/>
+    {/* <Table className="routes-table" columns={columns} rows="" format="" /> */}
+    <Table className="routes-table" columns={columns} rows="" format={formatValue} data={data} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode}/>
   </section>
 </div>
 )
