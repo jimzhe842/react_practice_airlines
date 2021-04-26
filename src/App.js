@@ -53,6 +53,13 @@ const App = () => {
     filteredAirlines = filteredAirlines.filter(route => route.src === airportCode || route.dest === airportCode);
     selectedAirport = getAirportByCode(airportCode).name;
   }
+  let includedData = {};
+  filteredAirlines.forEach(route => {
+
+    includedData[route.airline] = true;
+    includedData[route.src] = true;
+    includedData[route.dest] = true;
+  });
 
   return (
     <div className="app">
@@ -65,9 +72,9 @@ const App = () => {
         </p>
         Show routes on
         <Select options={data.airlines} valueKey="id" titleKey="name"
-          allTitle="All Airlines" value="" onSelect={onSelect} selectedAirline={selectedAirline}/>
+          allTitle="All Airlines" value="" onSelect={onSelect} selectedAirline={selectedAirline} includedData={includedData}/>
         flying in or out of
-        <AirportSelect options={data.airports} onAirportSelect={onAirportSelect} selectedAirport={selectedAirport}/>
+        <AirportSelect options={data.airports} onAirportSelect={onAirportSelect} selectedAirport={selectedAirport} includedData={includedData}/>
         <button onClick={clearFilter}>Show All Routes</button>
         {/* <Table className="routes-table" columns={columns} rows="" format="" /> */}
         <Table className="routes-table" columns={columns} rowNumber={rowNumber} rows="" perPage={rowsPerPage} format={formatValue} data={filteredAirlines} getAirlineById={getAirlineById} getAirportByCode={getAirportByCode}/>
